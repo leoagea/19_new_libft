@@ -5,105 +5,108 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lagea <lagea@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 22:29:25 by lagea             #+#    #+#             */
-/*   Updated: 2024/08/16 12:52:50 by lagea            ###   ########.fr       */
+/*   Created: 2024/04/23 12:15:44 by vdarras           #+#    #+#             */
+/*   Updated: 2024/08/16 18:44:43 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "get_next_line.h"
+#include <stdlib.h>
 
-int	my_strlen(const char *str)
+t_list	*lstnew(char *content)
 {
-	int	len;
+	t_list	*new_elem;
 
-	len = 0;
-	if (!str)
-		return (0);
-	while (*str++)
+	if (content)
 	{
-		len++;
+		new_elem = (t_list *)malloc(sizeof(t_list));
+		if (!new_elem)
+			return (NULL);
+		new_elem->content = content;
+		new_elem->next = NULL;
+		new_elem->len = 0;
+		while (content[new_elem->len] != '\0')
+			new_elem->len++;
+		return (new_elem);
 	}
-	return (len);
-}
-
-char	*strchr_index(char *str)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			return ((char *)&str[i]);
-		i++;
-	}
-	if (str[i] == '\n')
-		return ((char *)&str[i]);
 	return (NULL);
 }
 
-char	*strjoin(char *s1, char *s2)
+void	lstadd_back(t_list **lst, t_list *new)
 {
-	int		i;
-	int		j;
-	char	*res;
+	t_list	*last;
 
-	res = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!res)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[j])
-		res[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		res[i++] = s2[j++];
-	res[i] = '\0';
-	return (res);
-}
-
-char	*my_strdup(char *s1)
-{
-	char			*dest;
-	unsigned int	i;
-
-	if (!s1)
-		return (NULL);
-	dest = (char *)malloc(ft_strlen(s1) + 1);
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (s1[i])
+	if (!lst || !new)
+		return ;
+	if (!*lst)
+		*lst = new;
+	else
 	{
-		dest[i] = s1[i];
-		i++;
+		last = *lst;
+		while (last->next)
+			last = last->next;
+		last->next = new;
 	}
-	dest[i] = '\0';
-	return (dest);
 }
 
-char	*substr(char *s, int start, int len)
+char	*ft_strchr_bis(t_list *lst, int c, int loop)
 {
-	int		i;
-	int		len_s;
-	char	*str;
+	const char	*s;
 
-	if (!s)
-		return (NULL);
-	if (start > my_strlen(s))
-		return (malloc(1));
-	len_s = my_strlen(s + start);
-	if (len > len_s)
-		len = len_s;
-	str = malloc((len + 1) * sizeof(char));
-	if (!str)
+	while (lst)
+	{
+		s = lst->content;
+		while (*s)
+		{
+			if (*s == (char)c)
+				return ((char *)s);
+			s++;
+		}
+		if (c == '\0')
+			return ((char *)s);
+		lst = lst->next;
+		if (!loop)
+			break ;
+	}
+	return (NULL);
+}
+
+char	*strdup(const char *s1)
+{
+	char	*copy;
+	size_t	len;
+	size_t	i;
+
+	len = 0;
+	while (s1[len])
+		len++;
+	copy = (char *)malloc(sizeof(char) * (len + 1));
+	if (!copy)
 		return (NULL);
 	i = 0;
 	while (i < len)
 	{
-		str[i] = s[start + i];
+		copy[i] = s1[i];
 		i++;
 	}
-	str[i] = 0;
-	return (str);
+	copy[i] = '\0';
+	return (copy);
+}
+
+void	ft_strjoin_bis(char *line, t_list *node, size_t len)
+{
+	size_t	i;
+	char	*tmp;
+
+	i = 0;
+	while (node && i < len)
+	{
+		tmp = node->content;
+		while (*tmp && *tmp != '\n' && i < len)
+			line[i++] = *tmp++;
+		if (*tmp == '\n' && i < len)
+			line[i++] = *tmp++;
+		node = node->next;
+	}
+	line[i] = '\0';
 }

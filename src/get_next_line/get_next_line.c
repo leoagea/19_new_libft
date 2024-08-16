@@ -5,89 +5,137 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lagea <lagea@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 22:29:14 by lagea             #+#    #+#             */
-/*   Updated: 2024/08/16 12:52:50 by lagea            ###   ########.fr       */
+/*   Created: 2024/04/23 12:15:47 by vdarras           #+#    #+#             */
+/*   Updated: 2024/08/16 18:45:37 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
 #include "get_next_line.h"
 
-char	*ft_set_line(char *line_buffer)
+t_list	**free_node(t_list **node, int loop)
 {
-	char	*line;
-	ssize_t	i;
+	t_list	*tmp;
 
-	i = 0;
-	while (line_buffer[i] != '\n' && line_buffer[i] != '\0')
-		i++;
-	if (line_buffer[i] == 0 || line_buffer[1] == 0)
+	if (!node || !*node)
 		return (NULL);
-	line = substr(line_buffer, i + 1, my_strlen(line_buffer) - i);
+	while (*node)
+	{
+		tmp = (*node)->next;
+		free((*node)->content);
+		free(*node);
+		*node = tmp;
+		if (!loop)
+			break ;
+	}
+	return (node);
+}
+
+char	*get_line_from_list(t_list *lst)
+{
+	t_list	*head;
+	char	*line;
+	size_t	len;
+	size_t	total_len;
+
+	head = lst;
+	len = 0;
+	total_len = 0;
+	while (lst && !ft_strchr_bis(lst, '\n', 0))
+	{
+		len += lst->len;
+		lst = lst->next;
+	}
+	if (lst)
+		len += (ft_strchr_bis(lst, '\n', 0) - lst->content) + 1;
+	line = (char *)malloc(sizeof(char) * (len + 1));
 	if (!line)
 		return (NULL);
-	if (*line == 0)
-	{
-		free(line);
-		line = NULL;
-	}
-	line_buffer[i + 1] = 0;
+	lst = head;
+	ft_strjoin_bis(line, head, len);
+	line[len] = '\0';
 	return (line);
 }
 
-char	*ft_fill_line_buffer(int fd, char *stash, char *buffer)
+void	clean_buffer(t_list **lst)
 {
-	ssize_t	b_read;
-	char	*tmp;
+	t_list	*curr;
+	t_list	*next;
+	char	*newline_pos;
 
-	b_read = 1;
-	while (b_read > 0)
+	curr = *lst;
+	while (curr && !ft_strchr_bis(curr, '\n', 0))
+		curr = *(free_node(lst, 0));
+	if (curr)
 	{
-		b_read = read(fd, buffer, BUFFER_SIZE);
-		if (b_read == -1)
+		newline_pos = ft_strchr_bis(curr, '\n', 0);
+		if (newline_pos)
 		{
-			free(stash);
-			return (NULL);
+			next = lstnew(strdup(newline_pos + 1));
+			if (next)
+			{
+				next->next = curr->next;
+				free_node(&curr, 0);
+				*lst = next;
+			}
 		}
-		else if (b_read == 0)
-			break ;
-		buffer[b_read] = 0;
-		if (!stash)
-			stash = my_strdup("");
-		tmp = stash;
-		stash = strjoin(tmp, buffer);
-		free(tmp);
-		tmp = NULL;
-		if (strchr_index(buffer))
-			break ;
+		else
+		{
+			lst = free_node(&curr, 1);
+		}
 	}
-	return (stash);
+}
+
+int	read_to_buffer(int fd, t_list **lst)
+{
+	char	*buf;
+	ssize_t	bytes_read;
+	t_list	*new_node;
+
+	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buf)
+		return (-1);
+	bytes_read = read(fd, buf, BUFFER_SIZE);
+	if (bytes_read <= 0)
+	{
+		free(buf);
+		return (bytes_read);
+	}
+	buf[bytes_read] = '\0';
+	new_node = lstnew(buf);
+	if (!new_node)
+	{
+		free(buf);
+		return (-1);
+	}
+	lstadd_back(lst, new_node);
+	return (bytes_read);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
-	char		*line;
-	char		*buffer;
+	static t_list	*bf;
+	char			*line;
+	int				res;
 
-	if (BUFFER_SIZE >= INT_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	res = 1;
+	while ((bf == NULL || ft_strchr_bis(bf, '\n', 1) == NULL) && res > 0)
 	{
-		free(stash);
-		free(buffer);
-		stash = NULL;
-		buffer = NULL;
+		res = read_to_buffer(fd, &bf);
+		if (res < 0)
+		{
+			free_node(&bf, 1);
+			return (NULL);
+		}
+	}
+	line = get_line_from_list(bf);
+	if (line == NULL || *line == '\0')
+	{
+		free_node(&bf, 1);
+		free(line);
 		return (NULL);
 	}
-	if (!buffer)
-		return (NULL);
-	line = ft_fill_line_buffer(fd, stash, buffer);
-	free(buffer);
-	buffer = NULL;
-	if (!line)
-		return (NULL);
-	stash = ft_set_line(line);
+	clean_buffer(&bf);
 	return (line);
 }
