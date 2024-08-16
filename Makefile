@@ -6,7 +6,7 @@
 #    By: lagea <lagea@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 16:07:15 by lagea             #+#    #+#              #
-#    Updated: 2024/08/16 13:02:58 by lagea            ###   ########.fr        #
+#    Updated: 2024/08/16 13:24:38 by lagea            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ INCS = -Ilibft.h -I.
 TOTAL_FILES 	:= $(words $(SRC))
 CURRENT_FILE 	:= 0
 
-define progress_bar_push_swap
+define progress_bar
     @$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
     @printf "\r$(YELLOW)Compiling Libft... [%-$(TOTAL_FILES)s] %d/%d $(NC)" $$(for i in $$(seq 1 $(CURRENT_FILE)); do printf "#"; done) $(CURRENT_FILE) $(TOTAL_FILES)
 	@if [ $(CURRENT_FILE) -eq $(TOTAL_FILES) ]; then echo ""; fi
@@ -66,23 +66,20 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)/original
 	@mkdir -p $(OBJ_DIR)/printf
 	@$(CC) $(CFLAGS) $(INCS) -g -c $< -o $@
-	$(call progress_bar_push_swap)
+	$(call progress_bar)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "$(GREEN)Creating libft library $(LIBNAME)...$(NC)"
 	@mkdir -p $(LIB_DIR)
 	@ar rc $(LIBNAME) $(OBJ)
 	@echo "$(BLUE)Library libft created!$(NC)"
 	
 clean:
-	@echo "$(ORANGE)Cleaning objects libft...$(NC)"
 	@$(RM) $(OBJ_DIR)
 	@echo "$(GREEN)Cleaned objects libft!$(NC)"
 
 fclean: clean
-	@echo "$(ORANGE)Fully cleaning libft...$(NC)"
 	@$(RM) $(LIBNAME)
 	@$(RM) lib
 	@echo "$(BLUE)Fully cleaned libft!$(NC)"
