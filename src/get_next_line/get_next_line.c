@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lagea <lagea@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lagea <lagea@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:15:47 by vdarras           #+#    #+#             */
-/*   Updated: 2024/08/16 18:45:37 by lagea            ###   ########.fr       */
+/*   Updated: 2025/01/22 19:07:54 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,9 @@ char	*get_line_from_list(t_list *lst)
 	t_list	*head;
 	char	*line;
 	size_t	len;
-	size_t	total_len;
 
 	head = lst;
 	len = 0;
-	total_len = 0;
 	while (lst && !ft_strchr_bis(lst, '\n', 0))
 	{
 		len += lst->len;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lagea <lagea@student.42.fr>                +#+  +:+       +#+         #
+#    By: lagea <lagea@student.s19.be>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 16:07:15 by lagea             #+#    #+#              #
-#    Updated: 2024/08/16 13:24:38 by lagea            ###   ########.fr        #
+#    Updated: 2025/01/22 19:05:24 by lagea            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 CC = gcc
 RM	= rm -rf
 CFLAGS = -Wall -Wextra -Werror
-INCS = -Ilibft.h -I.
+INCS = -Ilibft -I.
 
 TOTAL_FILES 	:= $(words $(SRC))
 CURRENT_FILE 	:= 0
