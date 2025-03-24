@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:26:11 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/24 20:08:23 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/24 22:16:14 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,9 @@ typedef struct s_dll
 }					t_dll;
 
 t_node				*dll_new_node(void *content);
-void				dll_insert_head(char *data, t_dll *dll);
-void				dll_insert_tail(char *data, t_dll *dll);
+void				dll_init(t_dll *dll);
+void				dll_insert_head(void *data, t_dll *dll);
+void				dll_insert_tail(void *data, t_dll *dll);
 void				dll_delete_head(t_dll *dll);
 void				dll_delete_tail(t_dll *dll);
 void				dll_revert(t_dll *dll);

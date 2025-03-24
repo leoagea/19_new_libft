@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dll_print_forward.c                                :+:      :+:    :+:   */
+/*   dll_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lagea <lagea@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 14:41:18 by lagea             #+#    #+#             */
-/*   Updated: 2024/08/16 13:00:17 by lagea            ###   ########.fr       */
+/*   Created: 2025/03/24 22:15:16 by lagea             #+#    #+#             */
+/*   Updated: 2025/03/24 22:18:43 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-void	dll_print_forward(t_dll *dll)
+void dll_init(t_dll *dll)
 {
-	t_node	*current;
-
-	current = dll->head;
-	while (current != NULL)
-	{
-		ft_printf("value : %s\n", current->str);
-		current = current->next;
-	}
+	dll->head = NULL;
+	dll->tail = NULL;
 }

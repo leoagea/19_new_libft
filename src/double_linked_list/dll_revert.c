@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dll_new_node.c                                     :+:      :+:    :+:   */
+/*   dll_revert.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 12:23:41 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/24 18:48:59 by lagea            ###   ########.fr       */
+/*   Created: 2025/03/24 18:50:45 by lagea             #+#    #+#             */
+/*   Updated: 2025/03/24 19:02:20 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-t_node	*dll_new_node(void *content)
+void dll_revert(t_dll *dll)
 {
-	t_node	*new;
+    if (!dll || !dll->head || dll->head == dll->tail)
+        return;
 
-	new = malloc(sizeof(t_node));
-	if (!new)
-		return (NULL);
-	new->content = NULL;
-	new->content = content;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
+    t_node *current = dll->head;
+    t_node *temp = NULL;
+
+    while (current != NULL)
+    {
+        temp = current->next;
+        current->next = current->prev;
+        current->prev = temp;
+
+        current = temp;
+    }
+
+    temp = dll->head;
+    dll->head = dll->tail;
+    dll->tail = temp;
 }
