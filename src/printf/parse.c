@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:06:36 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/24 17:55:02 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/24 20:07:57 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,26 @@ int	ft_check_next_char(const char *s, int index)
 		return (0);
 }
 
-int	ft_parse_printf(const char *s, int index, va_list *par)
+int	ft_parse_printf(int fd, const char *s, int index, va_list *par)
 {
 	if (s[index + 1] == 'c')
-		return (ft_print_char(va_arg(*par, int)));
+		return (ft_print_char(fd, va_arg(*par, int)));
 	else if (s[index + 1] == 's')
-		return (ft_print_string(va_arg(*par, char *)));
+		return (ft_print_string(fd, va_arg(*par, char *)));
 	else if (s[index + 1] == 'p')
-		return (ft_print_add(va_arg(*par, unsigned long)));
+		return (ft_print_add(fd, va_arg(*par, unsigned long)));
 	else if (s[index + 1] == 'd' || s[index + 1] == 'i')
-		return (ft_print_decimal(va_arg(*par, int)));
+		return (ft_print_decimal(fd, va_arg(*par, int)));
 	else if (s[index + 1] == 'u')
-		return (ft_print_udecimal(va_arg(*par, unsigned int)));
+		return (ft_print_udecimal(fd, va_arg(*par, unsigned int)));
 	else if (s[index + 1] == 'x')
-		return (ft_print_hex(va_arg(*par, long), "0123456789abcdef"));
+		return (ft_print_hex(fd,va_arg(*par, long), "0123456789abcdef"));
 	else if (s[index + 1] == 'X')
-		return (ft_print_hex(va_arg(*par, long), "0123456789ABCDEF"));
+		return (ft_print_hex(fd, va_arg(*par, long), "0123456789ABCDEF"));
 	else if (s[index + 1] == '%')
-		return (write(1, "%", 1));
+		return (write(fd, "%", 1));
 	else if (s[index + 1] == 'b')
-		return (ft_print_bool(va_arg(*par, int)));
+		return (ft_print_bool(fd, va_arg(*par, int)));
 	else
 		return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lagea <lagea@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:26:11 by lagea             #+#    #+#             */
-/*   Updated: 2024/08/16 12:54:33 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/24 20:08:23 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <unistd.h>
 
 # define BUFFER_SIZE 10000
+# define ERROR_PRINTF "ft_printf: works for stdout and stderr only, 1 or 2"
+
 /*--------------------------------LIBFT----------------------------------*/
 /*Libc functions*/
 int					ft_isalpha(int c);
@@ -93,7 +95,7 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 
 /*--------------------------------PRINTF---------------------------------*/
 
-int					ft_printf(const char *s, ...);
+int					ft_printf(int fd, const char *s, ...);
 
 /*----------------------------ADDED FUNCTIONS----------------------------*/
 
@@ -106,7 +108,7 @@ char				*ft_realloc(char *ptr, size_t new_size);
 
 typedef struct s_node
 {
-	char			*str;
+	void			*content;
 	struct s_node	*next;
 	struct s_node	*prev;
 }					t_node;
@@ -117,15 +119,14 @@ typedef struct s_dll
 	struct s_node	*tail;
 }					t_dll;
 
-int					dll_size(t_dll *dll);
+t_node				*dll_new_node(void *content);
 void				dll_insert_head(char *data, t_dll *dll);
 void				dll_insert_tail(char *data, t_dll *dll);
 void				dll_delete_head(t_dll *dll);
 void				dll_delete_tail(t_dll *dll);
-void				dll_print_backward(t_dll *dll);
-void				dll_print_forward(t_dll *dll);
+void				dll_revert(t_dll *dll);
 void				dll_clear(t_dll *dll);
-t_node				*dll_new_node(char *input);
+int					dll_size(t_dll *dll);
 
 /*-----------------------------GET NEXT LINE---------------------------------*/
 
