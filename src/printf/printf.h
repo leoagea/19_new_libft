@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printf.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lagea <lagea@student.s19.be>               +#+  +:+       +#+        */
+/*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 14:55:10 by lagea             #+#    #+#             */
-/*   Updated: 2024/08/02 13:05:19 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/24 17:43:45 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdarg.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 /*---------------------------------PARSE---------------------------------*/
 
@@ -33,6 +34,8 @@ int	ft_print_hex(unsigned int n, char *base);
 
 int	ft_print_hex_add(unsigned long n);
 int	ft_print_add(unsigned long add);
+int ft_print_bool(int valbool);
+
 
 /*-------------------------------UTILS_LEN--------------------------------*/
 

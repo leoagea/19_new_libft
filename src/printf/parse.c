@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lagea <lagea@student.s19.be>               +#+  +:+       +#+        */
+/*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:06:36 by lagea             #+#    #+#             */
-/*   Updated: 2024/06/18 15:15:14 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/24 17:55:02 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_check_next_char(const char *s, int index)
 	else if (s[index] == 'i' || s[index] == 'd' || s[index] == '%')
 		return (1);
 	else if ((s[index] == 'u' || s[index] == 'x' || s[index] == 'X'))
+		return (1);
+	else if (s[index] == 'b')
 		return (1);
 	else
 		return (0);
@@ -44,6 +46,8 @@ int	ft_parse_printf(const char *s, int index, va_list *par)
 		return (ft_print_hex(va_arg(*par, long), "0123456789ABCDEF"));
 	else if (s[index + 1] == '%')
 		return (write(1, "%", 1));
+	else if (s[index + 1] == 'b')
+		return (ft_print_bool(va_arg(*par, int)));
 	else
 		return (0);
 }
