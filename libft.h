@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:26:11 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/24 22:16:14 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/26 00:06:56 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void				dll_delete_head(t_dll *dll);
 void				dll_delete_tail(t_dll *dll);
 void				dll_revert(t_dll *dll);
 void				dll_clear(t_dll *dll);
+void				dll_bubble_sort(t_node *start, t_node *end, int (*cmp)(void *, void *));
 int					dll_size(t_dll *dll);
 
 /*-----------------------------GET NEXT LINE---------------------------------*/
