@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:06:25 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/24 20:03:36 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/26 23:17:42 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	ft_printf(int fd, const char *s, ...)
 
 	temp = 0;
 	index = 0;
-	if (fd != 1 && fd != 2)
-		return (write(2, ERROR_PRINTF, 51), 0);
+	if (fd < 0)
+		return (write(2, ERROR_PRINTF, 51), -1);
 	va_start(arg, s);
 	while (s[index])
 	{
