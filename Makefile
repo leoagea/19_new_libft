@@ -6,7 +6,7 @@
 #    By: lagea < lagea@student.s19.be >             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 16:07:15 by lagea             #+#    #+#              #
-#    Updated: 2025/03/26 00:15:28 by lagea            ###   ########.fr        #
+#    Updated: 2025/03/26 22:44:01 by lagea            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ SRC = src/original/ft_atoi.c src/original/ft_bzero.c src/original/ft_calloc.c sr
 		src/double_linked_list/dll_insert_head.c src/double_linked_list/dll_insert_tail.c src/double_linked_list/dll_new_node.c \
 		src/double_linked_list/dll_size.c src/double_linked_list/dll_clear.c src/double_linked_list/dll_init.c \
 		src/double_linked_list/dll_delete_head.c src/double_linked_list/dll_delete_tail.c src/double_linked_list/dll_bubble_sort.c \
-
+		src/double_linked_list/dll_free.c src/double_linked_list/dll_print_forward.c src/double_linked_list/dll_print_backward.c \
+		
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 CC = gcc
