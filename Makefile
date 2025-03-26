@@ -6,7 +6,7 @@
 #    By: lagea < lagea@student.s19.be >             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 16:07:15 by lagea             #+#    #+#              #
-#    Updated: 2025/03/26 22:44:01 by lagea            ###   ########.fr        #
+#    Updated: 2025/03/26 23:00:18 by lagea            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRC = src/original/ft_atoi.c src/original/ft_bzero.c src/original/ft_calloc.c sr
 		src/added_funct/ft_atol.c src/added_funct/ft_atoi_base.c src/added_funct/ft_putunbr_fd.c src/added_funct/ft_realloc.c \
 		src/added_funct/ft_bubble_sort_arr.c \
 		src/double_linked_list/dll_insert_head.c src/double_linked_list/dll_insert_tail.c src/double_linked_list/dll_new_node.c \
-		src/double_linked_list/dll_size.c src/double_linked_list/dll_clear.c src/double_linked_list/dll_init.c \
+		src/double_linked_list/dll_size.c src/double_linked_list/dll_clear.c src/double_linked_list/dll_init.c src/double_linked_list/dll_revert.c \
 		src/double_linked_list/dll_delete_head.c src/double_linked_list/dll_delete_tail.c src/double_linked_list/dll_bubble_sort.c \
 		src/double_linked_list/dll_free.c src/double_linked_list/dll_print_forward.c src/double_linked_list/dll_print_backward.c \
 		
@@ -88,4 +88,32 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+# Test rule to compile and run test suite
+test: $(NAME)
+	@echo "$(ORANGE)Running libft test suite...$(NC)"
+	@$(MAKE) -C tests
+	@echo "\n$(GREEN)Executing tests...$(NC)"
+	@tests/run_tests
+
+testclean:
+	@$(MAKE) -C tests clean
+	@echo "$(GREEN)Cleaned test objects!$(NC)"
+
+testfclean: testclean
+	@$(MAKE) -C tests fclean
+	@echo "$(BLUE)Fully cleaned tests!$(NC)"
+
+fullclean: fclean testfclean
+	@echo "$(BLUE)Everything is clean!$(NC)"
+
+# Single rule to run tests and clean everything
+runtest: $(NAME)
+	@echo "$(ORANGE)Running libft test suite...$(NC)"
+	@$(MAKE) -C tests
+	@echo "\n$(GREEN)Executing tests...$(NC)"
+	@tests/run_tests
+	@echo "\n$(BLUE)Cleaning up test files...$(NC)"
+	@$(MAKE) -C tests fclean
+	@echo "$(GREEN)All test files cleaned!$(NC)"
+
+.PHONY: all clean fclean re test testclean testfclean fullclean runtest
