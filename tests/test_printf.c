@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:00:00 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/26 22:54:11 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/27 01:14:12 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,20 @@ void test_printf_functions(void) {
     int ret8 = ft_printf(fd, "Test boolean: %b\n", 1);
     int ret9 = ft_printf(fd, "Test percent: %%\n");
     
+    // Long long tests
+    long long min_ll = -9223372036854775807LL - 1; // LLONG_MIN
+    long long max_ll = 9223372036854775807LL;      // LLONG_MAX
+    unsigned long long max_ull = 18446744073709551615ULL; // ULLONG_MAX
+    
+    int ret11 = ft_printf(fd, "Test long long (%%lld): %lld\n", min_ll);
+    int ret12 = ft_printf(fd, "Test long long (%%lli): %lli\n", max_ll);
+    int ret13 = ft_printf(fd, "Test unsigned long long: %llu\n", max_ull);
+    int ret14 = ft_printf(fd, "Test midsize long long: %lld\n", 123456789012345LL);
+    
     // Combined test
-    int ret10 = ft_printf(fd, "Combined test: %s %c %d %u %x %X %p %b %%\n", 
-                        "string", 'C', -123, 456u, 0xabc, 0xDEF, &ret2, 0);
+    int ret10 = ft_printf(fd, "Combined test: %s %c %d %u %x %X %p %b %% %lld %llu\n", 
+                        "string", 'C', -123, 456u, 0xabc, 0xDEF, &ret2, 0, 
+                        9876543210LL, 10123456789ULL);
     
     // Close file and reopen for reading
     close(fd);
@@ -52,7 +63,7 @@ void test_printf_functions(void) {
     }
     
     // Read and display the contents of the file
-    char buffer[1024];
+    char buffer[2048]; // Increased buffer size for longer outputs
     ssize_t bytes_read = read(fd, buffer, sizeof(buffer) - 1);
     buffer[bytes_read > 0 ? bytes_read : 0] = '\0';
     close(fd);
@@ -73,6 +84,13 @@ void test_printf_functions(void) {
     printf("ft_printf(\"Test pointer: %%p\\n\", &ret1) returned %d\n", ret7);
     printf("ft_printf(\"Test boolean: %%b\\n\", 1) returned %d\n", ret8);
     printf("ft_printf(\"Test percent: %%%%\\n\") returned %d\n", ret9);
+    
+    // Long long return values
+    printf("ft_printf(\"Test long long (%%lld): %%lld\\n\", LLONG_MIN) returned %d\n", ret11);
+    printf("ft_printf(\"Test long long (%%lli): %%lli\\n\", LLONG_MAX) returned %d\n", ret12);
+    printf("ft_printf(\"Test unsigned long long: %%llu\\n\", ULLONG_MAX) returned %d\n", ret13);
+    printf("ft_printf(\"Test midsize long long: %%lld\\n\", 123456789012345LL) returned %d\n", ret14);
+    
     printf("Combined test returned %d\n", ret10);
     
     // Clean up
