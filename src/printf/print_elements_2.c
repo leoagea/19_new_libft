@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:42:38 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/24 20:04:40 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/27 01:04:34 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,35 @@ int ft_print_bool(int fd, int valbool)
 		return (write(fd, "true", 4), 4);
 	else
 		return (write(fd, "false", 5), 5);
+}
+
+int	ft_print_longlong(int fd, long long n)
+{
+    int		count;
+    char	c;
+
+    count = 0;
+    if (n < 0)
+    {
+        count += ft_print_char(fd, '-');
+        n = -n;
+    }
+    if (n >= 10)
+        count += ft_print_longlong(fd, n / 10);
+    c = n % 10 + '0';
+    count += ft_print_char(fd, c);
+    return (count);
+}
+
+int	ft_print_ulonglong(int fd, unsigned long long n)
+{
+    int		count;
+    char	c;
+
+    count = 0;
+    if (n >= 10)
+        count += ft_print_ulonglong(fd, n / 10);
+    c = n % 10 + '0';
+    count += ft_print_char(fd, c);
+    return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 14:55:10 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/24 20:06:47 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/27 01:23:01 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 /*---------------------------------PARSE---------------------------------*/
 
 int	ft_check_next_char(const char *s, int index);
-int	ft_parse_printf(int fd, const char *s, int index, va_list *par);
+int	ft_parse_printf(int fd, const char *s, int *index, va_list *par);
 
 /*----------------------------PRINT_ELEMENTS-----------------------------*/
 
@@ -35,7 +35,10 @@ int	ft_print_hex(int fd, unsigned int n, char *base);
 int	ft_print_hex_add(int fd, unsigned long n);
 int	ft_print_add(int fd, unsigned long add);
 int ft_print_bool(int fd,int valbool);
+int	ft_print_longlong(int fd, long long n);
+int	ft_print_ulonglong(int fd, unsigned long long n);
 
+/*---------------------------PRINT_ELEMENTS_2----------------------------*/
 
 /*-------------------------------UTILS_LEN--------------------------------*/
 

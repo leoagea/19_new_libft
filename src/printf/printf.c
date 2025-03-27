@@ -6,13 +6,25 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:06:25 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/26 23:17:42 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/27 01:09:50 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 #include "printf.h"
 
+/*
+	%c : char
+	%s : string
+	%p : pointer
+	%d : decimal
+	%i : integer
+	%u : unsigned decimal
+	%x : hexadecimal
+	%X : hexadecimal
+	%% : percent
+	%b : binary
+*/
 int	ft_printf(int fd, const char *s, ...)
 {
 	int		temp;
@@ -28,7 +40,7 @@ int	ft_printf(int fd, const char *s, ...)
 	{
 		if (s[index] == '%' && ft_check_next_char(s, index))
 		{
-			temp += ft_parse_printf(fd, s, index, &arg);
+			temp += ft_parse_printf(fd, s, &index, &arg);
 			index++;
 		}
 		else

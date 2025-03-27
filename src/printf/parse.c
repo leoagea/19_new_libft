@@ -6,48 +6,52 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:06:36 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/24 20:07:57 by lagea            ###   ########.fr       */
+/*   Updated: 2025/03/27 01:22:54 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-int	ft_check_next_char(const char *s, int index)
+int	ft_check_next_char(const char *s, int i)
 {
-	if (!s[index + 1])
-		return (0);
-	else if (s[index] == 'c' || s[index] == 's' || s[index] == 'p')
-		return (1);
-	else if (s[index] == 'i' || s[index] == 'd' || s[index] == '%')
-		return (1);
-	else if ((s[index] == 'u' || s[index] == 'x' || s[index] == 'X'))
-		return (1);
-	else if (s[index] == 'b')
-		return (1);
-	else
-		return (0);
+	if (s[i] == 'c' || s[i] == 's' || s[i] == 'p' || s[i] == 'd' 
+		|| s[i] == 'i' || s[i] == 'u' || s[i] == 'x' || s[i] == 'X' 
+		|| s[i] == '%' || s[i] == 'b' || (s[i] == 'l' && s[i + 1] == 'l' 
+        && (s[i + 2] == 'd' || s[i + 2] == 'i' || s[i + 2] == 'u')))
+        return (1);
+	return (0);
 }
 
-int	ft_parse_printf(int fd, const char *s, int index, va_list *par)
+int	ft_parse_printf(int fd, const char *s, int *i, va_list *par)
 {
-	if (s[index + 1] == 'c')
+	if (s[*i + 1] == 'c')
 		return (ft_print_char(fd, va_arg(*par, int)));
-	else if (s[index + 1] == 's')
+	else if (s[*i + 1] == 's')
 		return (ft_print_string(fd, va_arg(*par, char *)));
-	else if (s[index + 1] == 'p')
+	else if (s[*i + 1] == 'p')
 		return (ft_print_add(fd, va_arg(*par, unsigned long)));
-	else if (s[index + 1] == 'd' || s[index + 1] == 'i')
+	else if (s[*i + 1] == 'd' || s[*i + 1] == 'i')
 		return (ft_print_decimal(fd, va_arg(*par, int)));
-	else if (s[index + 1] == 'u')
+	else if (s[*i + 1] == 'u')
 		return (ft_print_udecimal(fd, va_arg(*par, unsigned int)));
-	else if (s[index + 1] == 'x')
+	else if (s[*i + 1] == 'x')
 		return (ft_print_hex(fd,va_arg(*par, long), "0123456789abcdef"));
-	else if (s[index + 1] == 'X')
+	else if (s[*i + 1] == 'X')
 		return (ft_print_hex(fd, va_arg(*par, long), "0123456789ABCDEF"));
-	else if (s[index + 1] == '%')
+	else if (s[*i + 1] == '%')
 		return (write(fd, "%", 1));
-	else if (s[index + 1] == 'b')
+	else if (s[*i + 1] == 'b')
 		return (ft_print_bool(fd, va_arg(*par, int)));
+	else if (s[*i + 1] == 'l' && s[*i + 2] == 'l' && (s[*i + 3] == 'd' || s[*i + 3] == 'i'))
+	{
+		*i = *i + 2;
+		return (ft_print_longlong(fd, va_arg(*par, long long)));
+	}
+	else if (s[*i + 1] == 'l' && s[*i + 2] == 'l' && s[*i + 3] == 'u')
+	{
+		*i = *i + 2;
+		return (ft_print_ulonglong(fd, va_arg(*par, unsigned long long)));
+	}
 	else
 		return (0);
 }
