@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:00:00 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/26 22:54:28 by lagea            ###   ########.fr       */
+/*   Updated: 2025/04/17 16:30:46 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,35 @@ void test_ft_bubble_sort_arr(void) {
     print_test_result("ft_bubble_sort_arr with structs by score", score_sort_success);
 }
 
+void test_ft_join_path(void) {
+    printf("\nTesting ft_join_path...\n");
+    
+    int score_join_success = 1;
+    char *path1 = "/usr/local/bin";
+    char *path2 = "my_program";
+    
+    char *result = ft_join_path(path1, path2);
+    if (result) {
+        printf("Joined path: %s\n", result);
+        free(result);
+    } else {
+        printf("\033[0;31m[ERROR]\033[0m Failed to join paths\n");
+        score_join_success = 0;
+    }
+
+    // Test with NULL path
+    char *result2 = ft_join_path(NULL, path2);
+    if (result2) {
+        printf("Joined path with NULL: %s\n", result2);
+        free(result2);
+    } else {
+        score_join_success = 0;
+        printf("\033[0;31m[ERROR]\033[0m Failed to join NULL path\n");
+    }
+
+    print_test_result("ft_join_path", score_join_success);
+}
+
 // Main function for testing added functions
 void test_added_functions(void) {
     test_ft_atol();
@@ -244,4 +273,5 @@ void test_added_functions(void) {
     test_ft_putunbr_fd();
     test_ft_realloc();
     test_ft_bubble_sort_arr();
+    test_ft_join_path();
 }

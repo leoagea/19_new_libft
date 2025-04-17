@@ -6,7 +6,7 @@
 #    By: lagea < lagea@student.s19.be >             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 16:07:15 by lagea             #+#    #+#              #
-#    Updated: 2025/03/26 23:00:18 by lagea            ###   ########.fr        #
+#    Updated: 2025/04/17 16:25:31 by lagea            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRC = src/original/ft_atoi.c src/original/ft_bzero.c src/original/ft_calloc.c sr
 		src/printf/printf.c src/printf/parse.c src/printf/print_elements.c src/printf/print_elements_2.c src/printf/utils_len.c \
 		src/get_next_line/get_next_line.c src/get_next_line/get_next_line_utils.c \
 		src/added_funct/ft_atol.c src/added_funct/ft_atoi_base.c src/added_funct/ft_putunbr_fd.c src/added_funct/ft_realloc.c \
-		src/added_funct/ft_bubble_sort_arr.c \
+		src/added_funct/ft_bubble_sort_arr.c src/added_funct/ft_join_path.c \
 		src/double_linked_list/dll_insert_head.c src/double_linked_list/dll_insert_tail.c src/double_linked_list/dll_new_node.c \
 		src/double_linked_list/dll_size.c src/double_linked_list/dll_clear.c src/double_linked_list/dll_init.c src/double_linked_list/dll_revert.c \
 		src/double_linked_list/dll_delete_head.c src/double_linked_list/dll_delete_tail.c src/double_linked_list/dll_bubble_sort.c \
