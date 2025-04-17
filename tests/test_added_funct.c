@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:00:00 by lagea             #+#    #+#             */
-/*   Updated: 2025/04/17 16:30:46 by lagea            ###   ########.fr       */
+/*   Updated: 2025/04/17 18:28:28 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,77 @@ void test_ft_join_path(void) {
     print_test_result("ft_join_path", score_join_success);
 }
 
+void test_ft_bubble_sort_string_arr(void) {
+    printf("\nTesting ft_bubble_sort_string_arr...\n");
+    
+    char *str_array[] = {"banana", "apple", "cherry", "date", NULL};
+    int str_array_size = 4; // Exclude NULL terminator
+    
+    printf("Original string array:\n");
+    for (int i = 0; i < str_array_size; i++) {
+        printf("%s ", str_array[i]);
+    }
+    printf("\n");
+    
+    ft_bubble_sort_string_arr(str_array, str_array_size);
+    
+    printf("Sorted string array:\n");
+    for (int i = 0; i < str_array_size; i++) {
+        printf("%s ", str_array[i]);
+    }
+    printf("\n");
+    
+    int str_sort_success = 1;
+    for (int i = 1; i < str_array_size; i++) {
+        if (strcmp(str_array[i], str_array[i-1]) < 0) {
+            str_sort_success = 0;
+            break;
+        }
+    }
+    print_test_result("ft_bubble_sort_string_arr", str_sort_success);
+}
+
+void test_ft_arr_len(void) {
+    printf("\nTesting ft_arr_len...\n");
+    
+    char *arr[] = {"apple", "banana", "cherry", NULL};
+    int len = ft_arr_len((void **)arr);
+    
+    printf("Array length: %d\n", len);
+    
+    int success = (len == 3);
+    print_test_result("ft_arr_len", success);
+}
+
+void test_ft_arr_revert(){
+    printf("\nTesting ft_arr_revert...\n");
+    
+    char *arr[] = {"apple", "banana", "cherry", NULL};
+    int len = ft_arr_len((void **)arr);
+    
+    printf("Original array:\n");
+    for (int i = 0; i < len; i++) {
+        printf("%s ", arr[i]);
+    }
+    printf("\n");
+    
+    ft_arr_revert((void **)arr);
+    
+    printf("Reverted array:\n");
+    for (int i = 0; i < len; i++) {
+        printf("%s ", arr[i]);
+    }
+    printf("\n");
+    int success = 1;
+    for (int i = 0; i < len / 2; i++) {
+        if (strcmp(arr[i], arr[len - 1 - i]) < 0) {
+            success = 0;
+            break;
+        }
+    }
+    print_test_result("ft_arr_revert", success);
+}
+
 // Main function for testing added functions
 void test_added_functions(void) {
     test_ft_atol();
@@ -274,4 +345,7 @@ void test_added_functions(void) {
     test_ft_realloc();
     test_ft_bubble_sort_arr();
     test_ft_join_path();
+    test_ft_bubble_sort_string_arr();
+    test_ft_arr_len();
+    test_ft_arr_revert();
 }
