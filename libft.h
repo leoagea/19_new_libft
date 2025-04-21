@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
+/*   By: lagea <lagea@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:26:11 by lagea             #+#    #+#             */
-/*   Updated: 2025/04/17 18:26:49 by lagea            ###   ########.fr       */
+/*   Updated: 2025/04/21 14:55:00 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@
 # include <string.h> //strerror
 # include <unistd.h>
 
-# define BUFFER_SIZE 10000
-# define ERROR_PRINTF "ft_printf: works for stdout and stderr only, 1 or 2"
+# include "define.h"
 
 /*--------------------------------LIBFT----------------------------------*/
 /*Libc functions*/
