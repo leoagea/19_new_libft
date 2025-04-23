@@ -6,7 +6,7 @@
 /*   By: lagea <lagea@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:26:11 by lagea             #+#    #+#             */
-/*   Updated: 2025/04/21 14:55:00 by lagea            ###   ########.fr       */
+/*   Updated: 2025/04/23 17:02:55 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char				*ft_join_path(char *path, char *cmd);
 void				ft_bubble_sort_string_arr(char **arr, int n);
 int					ft_arr_len(void **arr);
 void				ft_arr_revert(void **arr);
+size_t    			ft_intlen(int n);
 
 /*-------------------------DOUBLE LIMKED LIST----------------------------*/
 
