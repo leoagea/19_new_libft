@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dll_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
+/*   By: lagea <lagea@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 22:35:09 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/26 22:36:17 by lagea            ###   ########.fr       */
+/*   Updated: 2025/05/07 18:10:27 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void dll_free(t_dll *dll, void (*free_content)(void *))
 	while (node)
 	{
 		next = node->next;
-		free_content(node->content);
+		if (free_content)
+			free_content(node->content);
 		free(node);
 		node = next;
 	}
