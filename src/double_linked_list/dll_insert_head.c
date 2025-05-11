@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:18:21 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/24 21:35:43 by lagea            ###   ########.fr       */
+/*   Updated: 2025/05/11 19:15:31 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ void	dll_insert_head(void *data, t_dll *dll)
 	{
 		dll->head = new;
 		dll->tail = new;
+		dll->size = 1;
 	}
 	else
 	{
 		new->next = dll->head;
 		dll->head->prev = new;
 		dll->head = new;
+		dll->size++;
 	}
 }
