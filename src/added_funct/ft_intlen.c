@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lagea <lagea@student.s19.be>               +#+  +:+       +#+        */
+/*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:49:19 by lagea             #+#    #+#             */
-/*   Updated: 2025/04/23 17:00:23 by lagea            ###   ########.fr       */
+/*   Updated: 2025/05/13 01:14:33 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,13 @@
 
 size_t    ft_intlen(int n)
 {
-    size_t	len;
+    size_t	len = 0;
 
-    len = 0;
-    if (n < 0)
-    {
+    if (n < 0){
         n = -n;
         len++;
     }
-    if (n == 0)
-        return (1);
-    while (n > 0)
-    {
+    while (n > 0){
         n /= 10;
         len++;
     }
