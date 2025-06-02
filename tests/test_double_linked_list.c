@@ -6,7 +6,7 @@
 /*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:00:00 by lagea             #+#    #+#             */
-/*   Updated: 2025/03/26 22:59:17 by lagea            ###   ########.fr       */
+/*   Updated: 2025/06/02 18:39:07 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void test_dll_revert(void);
 void test_dll_print(void);
 void test_dll_bubble_sort(void);
 void test_dll_free(void);
+void test_dll_quick_sort(void);
 
 // Main test function
 void test_double_linked_list(void) {
@@ -81,6 +82,7 @@ void test_double_linked_list(void) {
     test_dll_print();
     test_dll_bubble_sort();
     test_dll_free();
+    test_dll_quick_sort();
 }
 
 // Test implementation
@@ -390,4 +392,242 @@ void test_dll_free(void) {
         printf("\033[0;31m[FAIL]\033[0m dll_free did not reset list pointers\n");
     
     printf("\033[0;33m[NOTE]\033[0m If the program doesn't crash, dll_free likely worked correctly\n");
+}
+
+//////////////////////////////////////////////////////////////////
+// Test: Quick sort on double linked list
+//////////////////////////////////////////////////////////////////
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Helper comparison function for integers
+int int_cmp(void *a, void *b) {
+	int ia = *(int *)a;
+	int ib = *(int *)b;
+	return (ia > ib) - (ia < ib);
+}
+
+void debug_print_dll(t_dll *list, const char *test_name) {
+    printf("\n=== %s ===\n", test_name);
+    printf("List content: ");
+    
+    t_node *current = list->head;
+    // Forward traversal
+    printf("Forward:  ");
+    while (current) {
+        printf("%d -> ", *(int*)current->content);
+        current = current->next;
+    }
+    printf("Size: %zu\n", list->size);
+}
+
+// Helper to free the list
+void free_list(t_dll *list) {
+	t_node *cur = list->head;
+	while (cur) {
+		t_node *next = cur->next;
+		free(cur->content);
+		free(cur);
+		cur = next;
+	}
+	list->head = list->tail = NULL;
+}
+
+// Helper to insert integer into list
+void insert_int_tail(t_dll *list, int value) {
+	int *p = malloc(sizeof(int));
+	*p = value;
+	dll_insert_tail(p, list);
+}
+
+// Test: sorting an empty list
+int test_empty_list() {
+	t_dll list;
+	dll_init(&list);
+	dll_quick_sort(&list, int_cmp);
+	if (list.head == NULL && list.tail == NULL){
+	    free_list(&list);
+        return 0;
+    }
+	else{
+	    free_list(&list);
+        return 1;
+    }
+}
+
+// Test: sorting a single element list
+int test_single_element() {
+	t_dll list;
+	dll_init(&list);
+	insert_int_tail(&list, 42);
+	dll_quick_sort(&list, int_cmp);
+	if (list.head && list.tail && list.head == list.tail && *(int *)list.head->content == 42){
+	    free_list(&list);
+        return 0;
+    }
+	else{
+	    free_list(&list);
+        return 1;
+    }
+	free_list(&list);
+}
+
+// Test: sorting a list with multiple elements
+int test_multiple_elements() {
+	t_dll list;
+	dll_init(&list);
+	int vals[] = {5, 3, 8, 1, 7};
+	for (int i = 0; i < 5; i++)
+		insert_int_tail(&list, vals[i]);
+	// debug_print_dll(&list, "Before sorting multiple elements");
+	dll_quick_sort(&list, int_cmp);
+
+	int expected[] = {1, 3, 5, 7, 8};
+	t_node *cur = list.head;
+	int pass = 1;
+	for (int i = 0; i < 5; i++) {
+		if (!cur || *(int *)cur->content != expected[i]) {
+			pass = 0;
+			break;
+		}
+		cur = cur->next;
+	}
+	if (pass && cur == NULL)
+	{
+		// debug_print_dll(&list, "test_multiple_elements");
+		// printf("test_multiple_elements: PASS\n");
+		// printf("=============\n");
+	    free_list(&list);
+        return 0;
+    }
+	else{
+	    free_list(&list);
+        return 1;
+    }
+	free_list(&list);
+}
+
+// Test: sorting a list with duplicate elements
+int test_duplicates() {
+	t_dll list;
+	dll_init(&list);
+	int vals[] = {4, 2, 4, 2, 4};
+	for (int i = 0; i < 5; i++)
+		insert_int_tail(&list, vals[i]);
+	// debug_print_dll(&list, "Before sorting duplicates");
+	dll_quick_sort(&list, int_cmp);
+
+	int expected[] = {2, 2, 4, 4, 4};
+	t_node *cur = list.head;
+	int pass = 1;
+	for (int i = 0; i < 5; i++) {
+		if (!cur || *(int *)cur->content != expected[i]) {
+			pass = 0;
+			break;
+		}
+		cur = cur->next;
+	}
+	if (pass && cur == NULL)
+	{
+		// debug_print_dll(&list, "test_duplicates");
+		// printf("test_duplicates: PASS\n");
+		// printf("=============\n");
+	    free_list(&list);
+        return 0;
+	}
+	else{
+	    free_list(&list);
+        return 1;
+    }
+	free_list(&list);
+}
+
+// Test: already sorted list
+int test_sorted() {
+	t_dll list;
+	dll_init(&list);
+	int vals[] = {1, 2, 3, 4, 5};
+	for (int i = 0; i < 5; i++)
+		insert_int_tail(&list, vals[i]);
+	dll_quick_sort(&list, int_cmp);
+
+	int expected[] = {1, 2, 3, 4, 5};
+	t_node *cur = list.head;
+	int pass = 1;
+	for (int i = 0; i < 5; i++) {
+		if (!cur || *(int *)cur->content != expected[i]) {
+			pass = 0;
+			break;
+		}
+		cur = cur->next;
+	}
+	if (pass && cur == NULL){
+        free_list(&list);
+		return 0;
+    }
+	else{
+        
+        free_list(&list);
+        return 1;
+    }
+}
+
+// Test: reverse sorted list
+int test_reverse_sorted() {
+	t_dll list;
+	dll_init(&list);
+	int vals[] = {5, 4, 3, 2, 1};
+	for (int i = 0; i < 5; i++)
+		insert_int_tail(&list, vals[i]);
+	// debug_print_dll(&list, "Before sorting reverse sorted");
+	dll_quick_sort(&list, int_cmp);
+
+	int expected[] = {1, 2, 3, 4, 5};
+	t_node *cur = list.head;
+	int pass = 1;
+	for (int i = 0; i < 5; i++) {
+		if (!cur || *(int *)cur->content != expected[i]) {
+			pass = 0;
+			break;
+		}
+		cur = cur->next;
+	}
+	if (pass && cur == NULL){
+		// debug_print_dll(&list, "test_reverse_sorted");
+		// printf("=============\n");
+	    free_list(&list);
+		return 0;
+	}
+	else{
+	    free_list(&list);
+		return 1;
+    }
+}
+
+void test_dll_quick_sort(void) {
+    printf("\nTesting dll_quick_sort operation...\n");
+    const int expected_results[] = {
+        test_empty_list(),
+        test_single_element(),
+        test_multiple_elements(),
+        test_duplicates(),
+        test_sorted(),
+        test_reverse_sorted()
+    };
+    int all_passed = 1;
+    for (size_t i = 0; i < sizeof(expected_results) / sizeof(expected_results[0]); i++) {
+        if (expected_results[i] != 0) {
+            all_passed = 0;
+            printf("\033[0;31m[FAIL]\033[0m Test %ld failed\n", i + 1);
+        } else {
+            printf("\033[0;32m[PASS]\033[0m Test %ld passed\n", i + 1);
+        }
+    }
+    if (all_passed) {
+        printf("\033[0;32mAll tests passed!\033[0m\n");
+    } else {
+        printf("\033[0;31mSome tests failed.\033[0m\n");
+    }
 }
