@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dll_delete_tail.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lagea <lagea@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lagea < lagea@student.s19.be >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 00:18:01 by lagea             #+#    #+#             */
-/*   Updated: 2024/08/16 12:52:50 by lagea            ###   ########.fr       */
+/*   Updated: 2025/06/06 14:23:09 by lagea            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void	dll_delete_tail(t_dll *dll)
 		dll->tail->next = NULL;
 		free(temp);
 	}
+	dll->size--;
 }
